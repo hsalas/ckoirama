@@ -81,12 +81,21 @@ def get_coordinates():
     return coord, coord_units[coord_unit]
 
 def get_date():
+    f"""
+    Function that ask the user for the dates of the observations nihts.
+    If more than one observation nigth dates must be separated by ','.
+    Date format must be {settings.time_format}. This can be modified in the
+    settings.py file.
     """
-    """
-    time = input('\nInput observation date (yyyy-mm-dd): ')#pasar a dia juliano
-    time = '2018-05-06'
-    time = Time(time + ' 12:00:00')
-    return time
+    dates = input("\nInput observation date. If more thatn one use ',' between dates. ")
+    dates = dates.split(',')
+    times = []
+    for date in dates:
+        try:
+            time = Time(float(date), format=settings.time_format)
+        except:
+            raise ValueError(f'All dates must be in {settings.time_format}' )
+    return times
 
 def main():
     #define observer located at ckoirama observatory
